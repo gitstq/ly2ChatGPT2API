@@ -170,7 +170,7 @@ export function TopNav() {
           </Link>
           <span className="hidden h-5 w-px bg-border lg:block" />
           <a
-            href="https://github.com/RemotePinee/ChatGPT2API"
+            href="https://github.com/gitstq/ly2ChatGPT2API"
             target="_blank"
             rel="noreferrer"
             className="hidden cursor-pointer items-center gap-1.5 rounded-md px-2 py-1 text-[13px] leading-none text-muted-foreground transition hover:bg-secondary hover:text-foreground lg:inline-flex"

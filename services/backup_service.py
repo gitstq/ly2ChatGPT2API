@@ -46,7 +46,7 @@ def _hmac_sha256(key: bytes, message: str) -> bytes:
 
 def _openssl_encrypt(data: bytes, passphrase: str) -> bytes:
     env = dict(os.environ)
-    env["CHATGPT2API_BACKUP_PASSPHRASE"] = passphrase
+    env["LY2CHATGPT2API_BACKUP_PASSPHRASE"] = passphrase
     try:
         result = subprocess.run(
             [
@@ -58,7 +58,7 @@ def _openssl_encrypt(data: bytes, passphrase: str) -> bytes:
                 "-md",
                 "sha256",
                 "-pass",
-                "env:CHATGPT2API_BACKUP_PASSPHRASE",
+                "env:LY2CHATGPT2API_BACKUP_PASSPHRASE",
             ],
             input=data,
             stdout=subprocess.PIPE,
@@ -76,7 +76,7 @@ def _openssl_encrypt(data: bytes, passphrase: str) -> bytes:
 
 def _openssl_decrypt(data: bytes, passphrase: str) -> bytes:
     env = dict(os.environ)
-    env["CHATGPT2API_BACKUP_PASSPHRASE"] = passphrase
+    env["LY2CHATGPT2API_BACKUP_PASSPHRASE"] = passphrase
     try:
         result = subprocess.run(
             [
@@ -88,7 +88,7 @@ def _openssl_decrypt(data: bytes, passphrase: str) -> bytes:
                 "-md",
                 "sha256",
                 "-pass",
-                "env:CHATGPT2API_BACKUP_PASSPHRASE",
+                "env:LY2CHATGPT2API_BACKUP_PASSPHRASE",
             ],
             input=data,
             stdout=subprocess.PIPE,

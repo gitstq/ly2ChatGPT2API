@@ -1,5 +1,5 @@
 [project]
-name = "chatgpt2api"
+name = "ly2chatgpt2api"
 version = "1.2.3"
 description = "Add your description here"
 readme = "README.md"

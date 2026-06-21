@@ -10,7 +10,7 @@ import requests
 from test.utils import save_image
 from utils.log import logger
 
-AUTH_KEY = "chatgpt2api"
+AUTH_KEY = "ly2chatgpt2api"
 BASE_URL = "http://localhost:8000"
 ASSETS_DIR = Path(__file__).resolve().parents[1] / "assets"
 

@@ -8,7 +8,7 @@ import requests
 
 from utils.helper import save_images_from_text
 
-AUTH_KEY = "chatgpt2api"
+AUTH_KEY = "ly2chatgpt2api"
 BASE_URL = "http://localhost:8000"
 
 

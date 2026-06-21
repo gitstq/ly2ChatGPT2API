@@ -42,7 +42,7 @@ import { cn } from "@/lib/utils";
  * 格式：{ url: string; prompt: string }
  * 画图页 mount 时读一次，立刻清掉，避免下次刷新又触发。
  */
-const REDRAW_HANDOFF_KEY = "chatgpt2api:redraw_handoff";
+const REDRAW_HANDOFF_KEY = "ly2chatgpt2api:redraw_handoff";
 
 function imageKey(item: ManagedImage) {
   return item.rel || item.url;

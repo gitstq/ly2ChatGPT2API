@@ -43,14 +43,14 @@ import {
   type StoredReferenceImage,
 } from "@/store/image-conversations";
 
-const ACTIVE_CONVERSATION_STORAGE_KEY = "chatgpt2api:image_active_conversation_id";
-const IMAGE_SIZE_STORAGE_KEY = "chatgpt2api:image_last_size";
-const IMAGE_RESOLUTION_STORAGE_KEY = "chatgpt2api:image_last_resolution";
-const IMAGE_COUNT_STORAGE_KEY = "chatgpt2api:image_last_count";
+const ACTIVE_CONVERSATION_STORAGE_KEY = "ly2chatgpt2api:image_active_conversation_id";
+const IMAGE_SIZE_STORAGE_KEY = "ly2chatgpt2api:image_last_size";
+const IMAGE_RESOLUTION_STORAGE_KEY = "ly2chatgpt2api:image_last_resolution";
+const IMAGE_COUNT_STORAGE_KEY = "ly2chatgpt2api:image_last_count";
 const HIGH_RESOLUTION_VALUES = new Set(["2k", "4k"]);
 // 每个会话的滚动位置单独存。用 sessionStorage 因为这就是"会话级"的临时位置，
 // 关浏览器后从底部重看更自然；要跨浏览器会话保留改成 localStorage 即可。
-const SCROLL_POSITION_STORAGE_KEY = "chatgpt2api:image_scroll_positions";
+const SCROLL_POSITION_STORAGE_KEY = "ly2chatgpt2api:image_scroll_positions";
 
 function clampImageCount(value: string) {
   return String(Math.min(100, Math.max(1, Math.floor(Number(value) || 1))));
@@ -512,8 +512,8 @@ function ImagePageContent({ isAdmin }: { isAdmin: boolean }) {
     redrawHandoffConsumedRef.current = true;
     let raw: string | null = null;
     try {
-      raw = window.sessionStorage.getItem("chatgpt2api:redraw_handoff");
-      if (raw) window.sessionStorage.removeItem("chatgpt2api:redraw_handoff");
+      raw = window.sessionStorage.getItem("ly2chatgpt2api:redraw_handoff");
+      if (raw) window.sessionStorage.removeItem("ly2chatgpt2api:redraw_handoff");
     } catch {
       return;
     }

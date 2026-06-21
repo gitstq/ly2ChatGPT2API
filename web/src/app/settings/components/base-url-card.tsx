@@ -28,7 +28,7 @@ export function BaseUrlCard() {
             </div>
             <div>
               <h2 className="text-lg font-semibold tracking-tight">基础地址</h2>
-              <p className="text-sm text-stone-500">设置 `CHATGPT2API_BASE_URL` 的本地配置值，保存后立即生效。</p>
+              <p className="text-sm text-stone-500">设置 `LY2CHATGPT2API_BASE_URL` 的本地配置值，保存后立即生效。</p>
             </div>
           </div>
           <Badge variant={baseUrl.trim() ? "success" : "secondary"} className="w-fit rounded-md px-2.5 py-1">

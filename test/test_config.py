@@ -38,12 +38,12 @@ class ConfigLoadingTests(unittest.TestCase):
             old_base_dir = module.BASE_DIR
             old_data_dir = module.DATA_DIR
             old_config_file = module.CONFIG_FILE
-            old_env_auth_key = module.os.environ.get("CHATGPT2API_AUTH_KEY")
+            old_env_auth_key = module.os.environ.get("LY2CHATGPT2API_AUTH_KEY")
             try:
                 module.BASE_DIR = base_dir
                 module.DATA_DIR = data_dir
                 module.CONFIG_FILE = config_dir
-                module.os.environ["CHATGPT2API_AUTH_KEY"] = os_auth_key
+                module.os.environ["LY2CHATGPT2API_AUTH_KEY"] = os_auth_key
 
                 settings = module._load_settings()
 
@@ -54,9 +54,9 @@ class ConfigLoadingTests(unittest.TestCase):
                 module.DATA_DIR = old_data_dir
                 module.CONFIG_FILE = old_config_file
                 if old_env_auth_key is None:
-                    module.os.environ.pop("CHATGPT2API_AUTH_KEY", None)
+                    module.os.environ.pop("LY2CHATGPT2API_AUTH_KEY", None)
                 else:
-                    module.os.environ["CHATGPT2API_AUTH_KEY"] = old_env_auth_key
+                    module.os.environ["LY2CHATGPT2API_AUTH_KEY"] = old_env_auth_key
 
 
 if __name__ == "__main__":

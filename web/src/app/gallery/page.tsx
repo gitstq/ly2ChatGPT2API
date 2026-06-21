@@ -38,7 +38,7 @@ import { cn } from "@/lib/utils";
 
 const PAGE_LIMIT = 24;
 // 与 /works 页保持一致的 sessionStorage key，/image 页 mount 时统一消费
-const REDRAW_HANDOFF_KEY = "chatgpt2api:redraw_handoff";
+const REDRAW_HANDOFF_KEY = "ly2chatgpt2api:redraw_handoff";
 
 /**
  * 响应式断点：[最小宽度 px, 该宽度下的列数]，从大到小排，先匹配先用。

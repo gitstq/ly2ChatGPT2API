@@ -1,12 +1,12 @@
 # Android 客户端对接文档
 
-面向 [Draw](https://github.com/RemotePinee) 安卓客户端的后端 API 集成指南。所有 `/v1/*` 接口与 OpenAI 官方协议兼容，可直接复用 OpenAI 安卓 SDK 的请求结构。
+面向 [Draw](https://github.com/gitstq/ly2ChatGPT2API/releases) 安卓客户端的后端 API 集成指南。所有 `/v1/*` 接口与 OpenAI 官方协议兼容，可直接复用 OpenAI 安卓 SDK 的请求结构。
 
 > 本文档跟随后端代码同步演进。如果发现接口与代码不一致，以代码为准并提 issue。
 
 > [!NOTE]
 > **官方 APK 闭源 / 后端 API 开源。**
-> - 官方维护的 Draw 安卓客户端只在 [Releases](https://github.com/RemotePinee/ChatGPT2API/releases) 以 APK 形式发布，本仓库不包含其源码。
+> - 官方维护的 Draw 安卓客户端只在 [Releases](https://github.com/gitstq/ly2ChatGPT2API/releases) 以 APK 形式发布，本仓库不包含其源码。
 > - 后端 API（含 `/v1/*`、`/api/gallery/*`、`/api/me/images` 等）完全开源，本文档就是用来支持你**基于该 API 自行实现安卓 / iOS / 桌面客户端**的。
 > - 如果你只是终端用户，直接装 Releases 里的 APK 即可，不需要读这篇文档。
 
@@ -35,7 +35,7 @@
 | Python | 3.13 |
 | 包管理 | uv |
 | Web 框架 | FastAPI |
-| 后端 repo | https://github.com/RemotePinee/ChatGPT2API |
+| 后端 repo | https://github.com/gitstq/ly2ChatGPT2API |
 | API 版本 | 见 `VERSION` 文件 |
 
 ---
@@ -146,11 +146,11 @@ Authorization: Bearer <token>
 {
   "object": "list",
   "data": [
-    { "id": "gpt-image-2", "object": "model", "owned_by": "chatgpt2api" },
-    { "id": "codex-gpt-image-2", "object": "model", "owned_by": "chatgpt2api" },
-    { "id": "auto", "object": "model", "owned_by": "chatgpt2api" },
-    { "id": "gpt-5", "object": "model", "owned_by": "chatgpt2api" },
-    { "id": "gpt-5-mini", "object": "model", "owned_by": "chatgpt2api" }
+    { "id": "gpt-image-2", "object": "model", "owned_by": "ly2chatgpt2api" },
+    { "id": "codex-gpt-image-2", "object": "model", "owned_by": "ly2chatgpt2api" },
+    { "id": "auto", "object": "model", "owned_by": "ly2chatgpt2api" },
+    { "id": "gpt-5", "object": "model", "owned_by": "ly2chatgpt2api" },
+    { "id": "gpt-5-mini", "object": "model", "owned_by": "ly2chatgpt2api" }
   ]
 }
 ```

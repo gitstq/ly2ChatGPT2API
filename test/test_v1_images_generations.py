@@ -8,7 +8,7 @@ import requests
 
 from test.utils import save_image
 
-AUTH_KEY = "chatgpt2api"
+AUTH_KEY = "ly2chatgpt2api"
 BASE_URL = "http://localhost:8000"
 
 

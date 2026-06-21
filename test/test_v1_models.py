@@ -8,7 +8,7 @@ import requests
 from services.protocol import openai_v1_models
 
 
-AUTH_KEY = "chatgpt2api"
+AUTH_KEY = "ly2chatgpt2api"
 BASE_URL = "http://localhost:8000"
 
 

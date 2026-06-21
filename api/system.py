@@ -20,7 +20,7 @@ from services.proxy_service import test_proxy
 
 def _admin_owner_ids() -> set[str]:
     """收集所有可能落在 image_owners.json 里的 admin id：
-    - "admin"：旧 auth_key（CHATGPT2API_AUTH_KEY / config.json.auth-key）的固定 id
+    - "admin"：旧 auth_key（LY2CHATGPT2API_AUTH_KEY / config.json.auth-key）的固定 id
     - 其余：通过 auth_service 创建的 admin 角色密钥
     用来把"管理员生成"和"真孤儿"两个桶区分开，别再混在一起。
     """

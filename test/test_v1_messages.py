@@ -6,7 +6,7 @@ import unittest
 
 import requests
 
-AUTH_KEY = "chatgpt2api"
+AUTH_KEY = "ly2chatgpt2api"
 BASE_URL = "http://localhost:8000"
 MODEL = "auto"
 

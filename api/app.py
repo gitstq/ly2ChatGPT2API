@@ -30,7 +30,7 @@ def create_app() -> FastAPI:
             thread.join(timeout=1)
             backup_service.stop()
 
-    app = FastAPI(title="chatgpt2api", version=app_version, lifespan=lifespan)
+    app = FastAPI(title="ly2chatgpt2api", version=app_version, lifespan=lifespan)
     app.add_middleware(
         CORSMiddleware,
         allow_origins=["*"],

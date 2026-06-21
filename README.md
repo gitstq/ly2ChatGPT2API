@@ -1,14 +1,14 @@
 <h1 align="center">
-  <img src="assets/logo.png" alt="ChatGPT2API" width="72" height="72" />
+  <img src="assets/logo.png" alt="ly2ChatGPT2API" width="72" height="72" />
   <br />
-  ChatGPT2API
+  ly2ChatGPT2API
 </h1>
 
 
-<p align="center">ChatGPT2API 主要是对 ChatGPT 官网相关能力进行逆向整理与封装，提供面向 ChatGPT 图片生成、图片编辑、多图组图编辑场景的 OpenAI 兼容图片 API / 代理，并集成在线画图、号池管理、多种账号导入方式与 Docker 自托管部署能力。</p>
+<p align="center">ly2ChatGPT2API 主要是对 ChatGPT 官网相关能力进行逆向整理与封装，提供面向 ChatGPT 图片生成、图片编辑、多图组图编辑场景的 OpenAI 兼容图片 API / 代理，并集成在线画图、号池管理、多种账号导入方式与 Docker 自托管部署能力。</p>
 
 <p align="center">
-  <img src="assets/hero.png" alt="ChatGPT2API" width="100%" />
+  <img src="assets/hero.png" alt="ly2ChatGPT2API" width="100%" />
 </p>
 
 > [!NOTE]
@@ -38,12 +38,12 @@
 ### Docker 运行
 
 ```bash
-git clone https://github.com/RemotePinee/ChatGPT2API.git
-cd ChatGPT2API
+git clone https://github.com/gitstq/ly2ChatGPT2API.git
+cd ly2ChatGPT2API
 docker compose up -d
 ```
 
-启动前请先在 `config.json` 中设置 `auth-key`，也可以在 `docker-compose.yml` 中通过 `CHATGPT2API_AUTH_KEY` 覆盖。
+启动前请先在 `config.json` 中设置 `auth-key`，也可以在 `docker-compose.yml` 中通过 `LY2CHATGPT2API_AUTH_KEY` 覆盖。
 
 - Web 面板：`http://localhost:3000`
 - API 地址：`http://localhost:3000/v1`
@@ -54,8 +54,8 @@ docker compose up -d
 启动后端：
 
 ```bash
-git clone https://github.com/RemotePinee/ChatGPT2API.git
-cd ChatGPT2API
+git clone https://github.com/gitstq/ly2ChatGPT2API.git
+cd ly2ChatGPT2API
 uv sync
 uv run main.py
 ```
@@ -63,7 +63,7 @@ uv run main.py
 启动前端：
 
 ```bash
-cd ChatGPT2API/web
+cd ly2ChatGPT2API/web
 bun install
 bun run dev
 ```
@@ -156,13 +156,13 @@ environment:
 提供配套的安卓客户端 **Draw**，与本项目后端深度对接，覆盖文生图、图生图、画廊、作品管理等场景。
 
 > [!NOTE]
-> 安卓客户端为闭源发布，仅以 APK 形式在 [Releases](https://github.com/RemotePinee/ChatGPT2API/releases) 提供下载；本仓库不包含其源码。后端 API 完全开源，欢迎基于 [`docs/android-integration.md`](docs/android-integration.md) 自行实现客户端。
+> 安卓客户端为闭源发布，仅以 APK 形式在 [Releases](https://github.com/gitstq/ly2ChatGPT2API/releases) 提供下载；本仓库不包含其源码。后端 API 完全开源，欢迎基于 [`docs/android-integration.md`](docs/android-integration.md) 自行实现客户端。
 
 ### 下载安装
 
-1. 在 [Releases](https://github.com/RemotePinee/ChatGPT2API/releases) 页面下载最新版 `Draw-vX.Y.Z.apk`
+1. 在 [Releases](https://github.com/gitstq/ly2ChatGPT2API/releases) 页面下载最新版 `Draw-vX.Y.Z.apk`
 2. 安装后启动，首次进入填写：
-   - **后端地址**：你部署的 ChatGPT2API 实例地址（例如 `https://api.example.com`）
+   - **后端地址**：你部署的 ly2ChatGPT2API 实例地址（例如 `https://api.example.com`）
    - **访问密钥**：管理员根 key（`config.json` 的 `auth-key`）或在设置页创建的 user 密钥
 
 ### 主要能力
