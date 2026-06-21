@@ -4,7 +4,7 @@ services:
     container_name: ly2chatgpt2api
     restart: unless-stopped
     ports:
-      - "3000:80"
+      - "3012:80"
     volumes:
       - ./data:/app/data
       - ./config.json:/app/config.json

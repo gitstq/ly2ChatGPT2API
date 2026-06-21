@@ -78,6 +78,70 @@ def is_rate_limit_error(exc: Exception | str) -> bool:
     )
 
 
+def _is_auth_error(exc: Exception | str) -> bool:
+    try:
+        status_code = int(getattr(exc, "status_code", 0) or 0)
+    except (TypeError, ValueError):
+        status_code = 0
+    return status_code == 401 or is_token_invalid_error(str(exc))
+
+
+def _probe_image_account_models(
+        backend: OpenAIBackendAPI,
+        access_token: str,
+        *,
+        source_type: str,
+        model: str,
+        requested_resolution: str = "",
+        requested_size: str = "",
+        codex_size: str = "",
+) -> tuple[bool, str]:
+    try:
+        backend.list_models()
+        payload = {
+            "event": "image_account_model_probe_ok",
+            "source_type": source_type,
+            "model": model,
+            "requested_resolution": requested_resolution,
+            "requested_size": requested_size,
+            "token": anonymize_token(access_token),
+        }
+        if codex_size:
+            payload["codex_size"] = codex_size
+        logger.info(payload)
+        return True, ""
+    except Exception as exc:
+        error = str(exc) or exc.__class__.__name__
+        action = "skipped"
+        if is_rate_limit_error(exc):
+            account_service.mark_image_rate_limited(
+                access_token,
+                error=error,
+                headers=getattr(exc, "headers", None),
+                body=getattr(exc, "body", None),
+            )
+            action = "rate_limited"
+        else:
+            account_service.release_image_slot(access_token)
+            if _is_auth_error(exc):
+                account_service.remove_invalid_token(access_token, f"{source_type}_image_model_probe")
+                action = "invalid"
+        payload = {
+            "event": "image_account_model_probe_failed",
+            "source_type": source_type,
+            "model": model,
+            "requested_resolution": requested_resolution,
+            "requested_size": requested_size,
+            "token": anonymize_token(access_token),
+            "action": action,
+            "error": error,
+        }
+        if codex_size:
+            payload["codex_size"] = codex_size
+        logger.warning(payload)
+        return False, error
+
+
 def mark_image_failure(access_token: str, exc: Exception | None = None) -> None:
     if exc is not None and is_rate_limit_error(exc):
         account_service.mark_image_rate_limited(
@@ -911,6 +975,7 @@ def try_stream_codex_image_outputs_with_pool(
     def iterator() -> Iterator[ImageOutput]:
         nonlocal token, selected_plan_type, plan_error
         last_rate_limit_error = ""
+        last_probe_error = ""
         while token:
             returned_result = False
             original_token = token
@@ -938,6 +1003,22 @@ def try_stream_codex_image_outputs_with_pool(
             })
             try:
                 backend = OpenAIBackendAPI(access_token=active_token)
+                probe_ok, probe_error = _probe_image_account_models(
+                    backend,
+                    active_token,
+                    source_type="codex",
+                    model=request.model,
+                    requested_resolution=request.resolution or "",
+                    requested_size=request.size or "",
+                    codex_size=image_size,
+                )
+                if not probe_ok:
+                    last_probe_error = probe_error
+                    excluded_tokens.add(active_token)
+                    token, selected_plan_type, plan_error = select_token(excluded_tokens)
+                    if token:
+                        continue
+                    break
                 for output in stream_codex_image_outputs(backend, request, image_size, index, total):
                     returned_result = returned_result or output.kind == "result"
                     yield output
@@ -966,11 +1047,11 @@ def try_stream_codex_image_outputs_with_pool(
                     if token:
                         continue
                     raise RuntimeError(
-                        last_rate_limit_error or plan_error or "no available codex image quota"
+                        last_rate_limit_error or last_probe_error or plan_error or "no available codex image quota"
                     ) from exc
                 mark_image_failure(active_token, exc)
                 raise
-        raise RuntimeError(last_rate_limit_error or plan_error or "no available codex image quota")
+        raise RuntimeError(last_rate_limit_error or last_probe_error or plan_error or "no available codex image quota")
 
     return True, iterator()
 
@@ -1050,7 +1131,7 @@ def stream_image_outputs_with_pool(request: ConversationRequest) -> Iterator[Ima
                         token = ""
                         continue
                 if not token:
-                    raise RuntimeError(plan_error or "no available image quota")
+                    raise RuntimeError(last_error or plan_error or "no available image quota")
                 attempted_image_tokens.add(token)
                 selected_account = account_service.get_account(token) or {}
                 logger.info({
@@ -1076,6 +1157,17 @@ def stream_image_outputs_with_pool(request: ConversationRequest) -> Iterator[Ima
             returned_result = False
             try:
                 backend = OpenAIBackendAPI(access_token=token)
+                probe_ok, probe_error = _probe_image_account_models(
+                    backend,
+                    token,
+                    source_type="codex" if codex_model else "web",
+                    model=request.model,
+                    requested_resolution=request.resolution or "",
+                    requested_size=request.size or "",
+                )
+                if not probe_ok:
+                    last_error = probe_error
+                    continue
                 for output in stream_image_outputs(backend, request, index, request.n):
                     if output.kind == "message" and request.message_as_error:
                         raise ImageGenerationError(
